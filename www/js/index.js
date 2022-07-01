@@ -19,11 +19,23 @@
 
 // Wait for the deviceready event before using any of Cordova's device APIs.
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
-document.addEventListener('deviceready', onDeviceReady, false);
+document.addEventListener("deviceready", onDeviceReady, false);
+document.addEventListener("backbutton", onBackKeyDown, false);
+document.addEventListener("pause", onPause, false);
+document.addEventListener("resume", onResume, false);
 
 function onDeviceReady() {
-    // Cordova is now initialized. Have fun!
+  alert("Device ready event occured");
+}
 
-    console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
-    document.getElementById('deviceready').classList.add('ready');
+function onBackKeyDown() {
+  alert("Back key down event occured");
+}
+
+function onPause() {
+  alert("Pause event occured");
+}
+
+function onResume() {
+  alert("Resume event occured");
 }
