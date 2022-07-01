@@ -18,9 +18,9 @@
     under the License.
 -->
 <html>
-    <head>
-        <meta charset="utf-8">
-        <!--
+  <head>
+    <meta charset="utf-8" />
+    <!--
         Customize this policy to fit your own app's needs. For more guidance, please refer to the docs:
             https://cordova.apache.org/docs/en/latest/
         Some notes:
@@ -28,56 +28,31 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-        <meta name="color-scheme" content="light dark">
-        <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
-        <script src="js/jquery-1.11.1.min.js"></script>
-        <script src="js/jquery.mobile-1.4.5.min.js"></script>
-        <title>Hello World</title>
-    </head>
-    <body>
-    <div data-role="page" id="page1">
-        <div data-role="header">
-            <h1>Page 1</h1>
-        </div>
-        <div role="main" class="ui-content">
-            <p>I'm first in the source order so I'm shown as the page.</p>
-            <p>View internal page called <a href="#page2">Page 2</a></p>
-        </div>
-        <div data-role="footer" data-position="fixed">
-            <div data-role="navbar">
-                <ul>
-                    <li><a href="#page1" data-role="button">Page 1</a></li>
-                    <li><a href="#page2" data-role="button">Page 2</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- Start of second page -->
-    <div data-role="page" id="page2">
-        <div data-role="header">
-            <h1>Page 2</h1>
-        </div>
-        <div role="main" class="ui-content">
-            <p>
-                I'm the second in the source order so I'm hidden when the page loads.
-                I'm just shown if a link that references my id is beeing clicked.
-            </p>
-            <p><a href="#page1">Back to Page 1</a></p>
-        </div>
-        <div data-role="footer" data-position="fixed">
-            <div data-role="navbar">
-                <ul>
-                    <li><a href="#page1" data-role="button">Page 1</a></li>
-                    <li><a href="#page2" data-role="button">Page 2</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-        <script src="cordova.js"></script>
-        <script src="js/index.js"></script>
-    </body>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta
+      name="viewport"
+      content="initial-scale=1, width=device-width, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <title>Hello World</title>
+  </head>
+  <body>
+    <form>
+      <p>What's your name?</p>
+      <input type="text" id="name" />
+      <input type="button" value="Save Name" id="saveButton" />
+    </form>
+    <br />
+    <div id="result"></div>
+    <script src="cordova.js"></script>
+    <script src="js/index.js"></script>
+  </body>
 </html>

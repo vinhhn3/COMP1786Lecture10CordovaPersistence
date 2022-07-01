@@ -20,22 +20,25 @@
 // Wait for the deviceready event before using any of Cordova's device APIs.
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
 document.addEventListener("deviceready", onDeviceReady, false);
-document.addEventListener("backbutton", onBackKeyDown, false);
-document.addEventListener("pause", onPause, false);
-document.addEventListener("resume", onResume, false);
 
 function onDeviceReady() {
-  alert("Device ready event occured");
+  document.getElementById("saveButton").addEventListener("click", storeName);
+  displayName();
 }
 
-function onBackKeyDown() {
-  alert("Back key down event occured");
+function storeName() {
+  var myName = document.getElementById("name").value;
+  window.localStorage.setItem("name", myName);
+  displayName();
+  return false;
 }
 
-function onPause() {
-  alert("Pause event occured");
-}
-
-function onResume() {
-  alert("Resume event occured");
+function displayName() {
+  var result = document.getElementById("result");
+  var myName = window.localStorage.getItem("name");
+  if (myName != null) {
+    result.innerHTML = "Your name is " + myName;
+  } else {
+    result.innerHTML = "Your name has not been set yet";
+  }
 }
