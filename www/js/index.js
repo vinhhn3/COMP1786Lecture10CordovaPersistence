@@ -22,8 +22,104 @@
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
-  document.getElementById("saveButton").addEventListener("click", storeName);
-  displayName();
+  document
+    .getElementById("searchButton")
+    .addEventListener("click", searchBooksByTitle);
+
+  document
+    .getElementById("showButton")
+    .addEventListener("click", showBooksByAuthor);
+
+  createDatabase();
+}
+
+var db;
+
+function createDatabase() {
+  var request = window.indexedDB.open("library");
+
+  request.onupgradeneeded = function () {
+    db = request.result;
+
+    var store = db.createObjectStore("books", { keyPath: "isbn" });
+
+    var titleIndex = store.createIndex("by_title", "title", { unique: true });
+
+    var authorIndex = store.createIndex("by_author", "author");
+
+    store.put({ title: "Title 1", author: "Author 1", isbn: 123 });
+    store.put({ title: "Title 2", author: "Author 2", isbn: 456 });
+    store.put({ title: "Title 3", author: "Author 3", isbn: 789 });
+  };
+
+  request.onsuccess = function () {
+    db = request.result;
+    alert("Database created");
+  };
+
+  request.onerror = function () {
+    alert("Error creating database: " + request.errorCode);
+  };
+}
+
+function searchBooksByTitle() {
+  var tx = db.transaction("books", "readonly");
+
+  var store = tx.objectStore("books");
+
+  var index = store.index("by_title");
+
+  var bookTitle = document.getElementById("search").value;
+  var request = index.get(bookTitle);
+
+  request.onsuccess = function () {
+    var matching = request.result;
+    var result = document.getElementById("result");
+
+    if (matching != undefined) {
+      result.innerHTML =
+        "<br/>Title: " +
+        matching.title +
+        ", Author: " +
+        matching.author +
+        ", ISBN: " +
+        matching.isbn;
+    } else {
+      result.innerHTML = "<br/>No match found";
+    }
+  };
+}
+
+function showBooksByAuthor() {
+  var tx = db.transaction("books", "readonly");
+
+  var store = tx.objectStore("books");
+
+  var index = store.index("by_author");
+
+  var author = document.getElementById("search").value;
+
+  var request = index.openCursor(IDBKeyRange.only(author));
+
+  document.getElementById("result").innerHTML = "<br/>";
+
+  request.onsuccess = function () {
+    var cursor = request.result;
+    if (cursor) {
+      document.getElementById("result").innerHTML +=
+        "<br/>Title: " +
+        cursor.value.title +
+        ", Author: " +
+        cursor.value.author +
+        ", ISBN: " +
+        cursor.value.isbn;
+
+      cursor.continue();
+    } else {
+      document.getElementById("result").innerHTML +=
+        "<br/><br/>Finished loading books";
+    }
+  };
 }
 
 function storeName() {
